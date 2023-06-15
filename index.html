@@ -20,7 +20,7 @@
     let z = document.querySelector('#z');
     
     function handleDeviceMotion(event) {
-      const currentPosition = event.accelerationIncludingGravity;
+      const currentPosition = event.acceleration;
       const deltaX = currentPosition.x;
       const deltaY = currentPosition.y;
       const deltaZ = currentPosition.z;

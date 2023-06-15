@@ -10,23 +10,34 @@
 </head>
 
 <body>
-  <h1>Distancia X: <span id="x"></span></h1>
-  <h1>Distancia Y: <span id="y"></span></h1>
-  <h1>Distancia Z: <span id="z"></span></h1>
+  <h1>Aceleracion X: <span id="aceleracion_x"></span></h1>
+  <h1>Aceleracion Y: <span id="aceleracion_y"></span></h1>
+  <h1>Aceleracion Z: <span id="aceleracion_z"></span></h1>
+  <h1>Tiempo: <span id="tiempo"></span></h1>
+  <h1>Velocidad X: <span id="velocidad_X"></span></h1>
+  <h1>Velocidad Y: <span id="velocidad_Y"></span></h1>
+  <h1>Velocidad Z: <span id="velocidad_Z"></span></h1>
   <script>
-    let count = 0;
-    let x = document.querySelector('#x');
-    let y = document.querySelector('#y');
-    let z = document.querySelector('#z');
+    let aceleracion = document.querySelector('#aceleracion');
+    let tiempo = document.querySelector('#tiempo');
     
     function handleDeviceMotion(event) {
       const currentPosition = event.acceleration;
-      const deltaX = currentPosition.x;
-      const deltaY = currentPosition.y;
-      const deltaZ = currentPosition.z;
-      x.textContent = deltaX.toFixed(2);
-      y.textContent = deltaY.toFixed(2);
-      z.textContent = deltaZ.toFixed(2);
+      const deltaAceleracion_X = currentPosition.x;
+      const deltaAceleracion_Y = currentPosition.y;
+      const deltaAceleracion_Z = currentPosition.z;
+      const tiempo = event.interval;
+      const deltaVelocidad_X = currentPosition.x * tiempo;
+      const deltaVelocidad_Y = currentPosition.y * tiempo;
+      const deltaVelocidad_Z = currentPosition.z * tiempo;
+
+      document.querySelector('#aceleracion_X').textContent = deltaAceleracion_X;
+      document.querySelector('#aceleracion_Y').textContent = deltaAceleracion_Y;
+      document.querySelector('#aceleracion_Z').textContent = deltaAceleracion_Z;
+      document.querySelector('#tiempo').textContent = tiempo/1000;
+      document.querySelector('#velocidad_X').textContent = deltaVelocidad_X;
+      document.querySelector('#velocidad_Y').textContent = deltaVelocidad_Y;
+      document.querySelector('#velocidad_Z').textContent = deltaVelocidad_Z;
     
     }
 

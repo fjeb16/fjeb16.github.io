@@ -15,7 +15,7 @@
   <h1>Distancia Z: <span id="z"></span></h1>
   <script>
     let count = 0;
-    /*let x = document.querySelector('#x');
+    let x = document.querySelector('#x');
     let y = document.querySelector('#y');
     let z = document.querySelector('#z');
     
@@ -31,10 +31,6 @@
       y.textContent = deltaY;
       z.textContent = deltaZ;
     
-    }*/
-    function handleDeviceMotion(event) {
-      document.querySelector('#x').textContent = count;
-      count++;
     }
 
     if (window.DeviceMotionEvent) {

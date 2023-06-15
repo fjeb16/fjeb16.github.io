@@ -24,12 +24,9 @@
       const deltaX = currentPosition.x;
       const deltaY = currentPosition.y;
       const deltaZ = currentPosition.z;
-      console.log(x);
-      console.log(z);
-      console.log(y);
-      x.textContent = deltaX;
-      y.textContent = deltaY;
-      z.textContent = deltaZ;
+      x.textContent = deltaX.toFixed(2);
+      y.textContent = deltaY.toFixed(2);
+      z.textContent = deltaZ.toFixed(2);
     
     }
 

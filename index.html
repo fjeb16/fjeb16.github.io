@@ -14,10 +14,11 @@
   <h1>Distancia Y: <span id="y"></span></h1>
   <h1>Distancia Z: <span id="z"></span></h1>
   <script>
-    let x = document.querySelector('#x');
+    let count = 0;
+    /*let x = document.querySelector('#x');
     let y = document.querySelector('#y');
     let z = document.querySelector('#z');
-    let count = 0;
+    
     function handleDeviceMotion(event) {
       const currentPosition = event.accelerationIncludingGravity;
       const deltaX = currentPosition.x;
@@ -29,6 +30,11 @@
       x.textContent = deltaX;
       y.textContent = deltaY;
       z.textContent = deltaZ;
+    
+    }*/
+    function handleDeviceMotion(event) {
+      document.querySelector('#x').textContent = count;
+      count++;
     }
 
     if (window.DeviceMotionEvent) {

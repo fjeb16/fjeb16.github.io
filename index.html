@@ -14,7 +14,10 @@
   <h1>Distancia Y: <span id="y"></span></h1>
   <h1>Distancia Z: <span id="z"></span></h1>
   <script>
-    x.texContent = "texto";
+    let x = document.querySelector('#x');
+    let y = document.querySelector('#y');
+    let z = document.querySelector('#z');
+
     function handleDeviceMotion(event) {
 
       const currentPosition = event.accelerationIncludingGravity;

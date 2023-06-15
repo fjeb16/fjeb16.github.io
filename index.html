@@ -5,13 +5,33 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite + React</title>
-  <script type="module" crossorigin src="assets/index-1ee6bd35.js"></script>
+  <title>Proyecto</title>
+
 </head>
 
 <body>
-  <div id="root"></div>
-  
+  <h1>Distancia X: <span id="x"></span></h1>
+  <h1>Distancia Y: <span id="y"></span></h1>
+  <h1>Distancia Z: <span id="z"></span></h1>
+  <script>
+    function handleDeviceMotion(event) {
+
+      const currentPosition = event.accelerationIncludingGravity;
+      const deltaX = currentPosition.x;
+      const deltaY = currentPosition.y;
+      const deltaZ = currentPosition.z;
+
+      x.texContent = deltaX;
+      y.texContent = deltaY;
+      z.texContent = deltaZ;
+    }
+
+    if (window.DeviceMotionEvent) {
+      window.addEventListener('devicemotion', handleDeviceMotion);
+    } else {
+      console.error('El dispositivo no soporta la API de detección de movimiento.');
+    }
+  </script>
 </body>
 
 </html>

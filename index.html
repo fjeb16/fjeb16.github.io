@@ -18,7 +18,7 @@
   <h1>Velocidad Y: <span id="velocidad_Y"></span></h1>
   <h1>Velocidad Z: <span id="velocidad_Z"></span></h1>
   <script>
-    let aceleracion = document.querySelector('#aceleracion');
+    let aceleracion = document.querySelector('#aceleracion_x');
     let tiempo = document.querySelector('#tiempo');
     
     function handleDeviceMotion(event) {
@@ -31,13 +31,13 @@
       const deltaVelocidad_Y = currentPosition.y * tiempo;
       const deltaVelocidad_Z = currentPosition.z * tiempo;
 
-      document.querySelector('#aceleracion_X').textContent = deltaAceleracion_X;
-      document.querySelector('#aceleracion_Y').textContent = deltaAceleracion_Y;
-      document.querySelector('#aceleracion_Z').textContent = deltaAceleracion_Z;
+      document.querySelector('#aceleracion_x').textContent = deltaAceleracion_X;
+      document.querySelector('#aceleracion_y').textContent = deltaAceleracion_Y;
+      document.querySelector('#aceleracion_z').textContent = deltaAceleracion_Z;
       document.querySelector('#tiempo').textContent = tiempo/1000;
-      document.querySelector('#velocidad_X').textContent = deltaVelocidad_X;
-      document.querySelector('#velocidad_Y').textContent = deltaVelocidad_Y;
-      document.querySelector('#velocidad_Z').textContent = deltaVelocidad_Z;
+      document.querySelector('#velocidad_x').textContent = deltaVelocidad_X;
+      document.querySelector('#velocidad_y').textContent = deltaVelocidad_Y;
+      document.querySelector('#velocidad_z').textContent = deltaVelocidad_Z;
     
     }
 

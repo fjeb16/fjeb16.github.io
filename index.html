@@ -15,30 +15,32 @@
   <h1>Aceleracion Y: <span id="aceleracion_y"></span></h1>
   <h1>Aceleracion Z: <span id="aceleracion_z"></span></h1>
   <h1>Tiempo: <span id="tiempo"></span></h1>
-  <h1>Velocidad X: <span id="velocidad_X"></span></h1>
-  <h1>Velocidad Y: <span id="velocidad_Y"></span></h1>
-  <h1>Velocidad Z: <span id="velocidad_Z"></span></h1>
+  <h1>Velocidad X: <span id="deltaAceleracion_gravedad_x"></span></h1>
+  <h1>Velocidad Y: <span id="deltaAceleracion_gravedad_y"></span></h1>
+  <h1>Velocidad Z: <span id="deltaAceleracion_gravedad_Z"></span></h1>
   <script>
     let aceleracion = document.querySelector('#aceleracion_x');
     let tiempo = document.querySelector('#tiempo');
     
     function handleDeviceMotion(event) {
-      const currentPosition = event.acceleration;
-      const deltaAceleracion_X = currentPosition.x;
-      const deltaAceleracion_Y = currentPosition.y;
-      const deltaAceleracion_Z = currentPosition.z;
+      const aceleracion = event.acceleration;
+      const deltaAceleracion_X = aceleracion.x.toFixed(2);
+      const deltaAceleracion_Y = aceleracion.y.toFixed(2);
+      const deltaAceleracion_Z = aceleracion.z.toFixed(2);
       const tiempo = event.interval;
-      const deltaVelocidad_X = currentPosition.x * tiempo;
-      const deltaVelocidad_Y = currentPosition.y * tiempo;
-      const deltaVelocidad_Z = currentPosition.z * tiempo;
+
+      const aceleracion_gravedad = event.accelerationIncludingGravity;
+      const deltaAceleracion_gravedad_X = aceleracion_gravedad.x.toFixed(2);
+      const deltaAceleracion_gravedad_Y = aceleracion_gravedad.y.toFixed(2);
+      const deltaAceleracion_gravedad_Z = aceleracion_gravedad.z.toFixed(2);
 
       document.querySelector('#aceleracion_x').textContent = deltaAceleracion_X;
       document.querySelector('#aceleracion_y').textContent = deltaAceleracion_Y;
       document.querySelector('#aceleracion_z').textContent = deltaAceleracion_Z;
       document.querySelector('#tiempo').textContent = tiempo/1000;
-      document.querySelector('#velocidad_x').textContent = deltaVelocidad_X;
-      document.querySelector('#velocidad_y').textContent = deltaVelocidad_Y;
-      document.querySelector('#velocidad_z').textContent = deltaVelocidad_Z;
+      document.querySelector('#deltaAceleracion_gravedad_X').textContent = deltaVelocidad_X;
+      document.querySelector('#deltaAceleracion_gravedad_Y').textContent = deltaVelocidad_Y;
+      document.querySelector('#deltaAceleracion_gravedad_Z').textContent = deltaVelocidad_Z;
     
     }
 

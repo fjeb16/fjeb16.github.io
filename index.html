@@ -5,13 +5,48 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite + React</title>
-  <script type="module" crossorigin src="assets/index-1ee6bd35.js"></script>
+  <title>Proyecto5</title>
+
 </head>
 
 <body>
-  <div id="root"></div>
-  
+  <h1>Aceleracion X: <span id="aceleracion_x"></span></h1>
+  <h1>Aceleracion Y: <span id="aceleracion_y"></span></h1>
+  <h1>Aceleracion Z: <span id="aceleracion_z"></span></h1>
+  <h1>Tiempo: <span id="tiempo"></span></h1>
+  <h1>Velocidad X: <span id="velocidad_X"></span></h1>
+  <h1>Velocidad Y: <span id="velocidad_Y"></span></h1>
+  <h1>Velocidad Z: <span id="velocidad_Z"></span></h1>
+  <script>
+    let aceleracion = document.querySelector('#aceleracion_x');
+    let tiempo = document.querySelector('#tiempo');
+    
+    function handleDeviceMotion(event) {
+      const currentPosition = event.acceleration;
+      const deltaAceleracion_X = currentPosition.x;
+      const deltaAceleracion_Y = currentPosition.y;
+      const deltaAceleracion_Z = currentPosition.z;
+      const tiempo = event.interval;
+      const deltaVelocidad_X = currentPosition.x * tiempo;
+      const deltaVelocidad_Y = currentPosition.y * tiempo;
+      const deltaVelocidad_Z = currentPosition.z * tiempo;
+
+      document.querySelector('#aceleracion_x').textContent = deltaAceleracion_X;
+      document.querySelector('#aceleracion_y').textContent = deltaAceleracion_Y;
+      document.querySelector('#aceleracion_z').textContent = deltaAceleracion_Z;
+      document.querySelector('#tiempo').textContent = tiempo/1000;
+      document.querySelector('#velocidad_x').textContent = deltaVelocidad_X;
+      document.querySelector('#velocidad_y').textContent = deltaVelocidad_Y;
+      document.querySelector('#velocidad_z').textContent = deltaVelocidad_Z;
+    
+    }
+
+    if (window.DeviceMotionEvent) {
+      window.addEventListener('devicemotion', handleDeviceMotion);
+    } else {
+      console.error('El dispositivo no soporta la API de detección de movimiento.');
+    }
+  </script>
 </body>
 
 </html>

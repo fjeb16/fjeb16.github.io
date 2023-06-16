@@ -6,7 +6,7 @@
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Proyecto5</title>
+  <title>Proyecto6</title>
 
 </head>
 
@@ -19,7 +19,7 @@
   <h1>Aceleracion_g Y: <span id="deltaAceleracion_gravedad_y"></span></h1>
   <h1>Aceleracion_g Z: <span id="deltaAceleracion_gravedad_Z"></span></h1>
   <script>
-    let aceleracion = document.querySelector('#aceleracion_x');
+
     let tiempo = document.querySelector('#tiempo');
     
     function handleDeviceMotion(event) {
@@ -38,9 +38,9 @@
       document.querySelector('#aceleracion_y').textContent = deltaAceleracion_Y;
       document.querySelector('#aceleracion_z').textContent = deltaAceleracion_Z;
       document.querySelector('#tiempo').textContent = tiempo/1000;
-      document.querySelector('#deltaAceleracion_gravedad_X').textContent = deltaVelocidad_X;
-      document.querySelector('#deltaAceleracion_gravedad_Y').textContent = deltaVelocidad_Y;
-      document.querySelector('#deltaAceleracion_gravedad_Z').textContent = deltaVelocidad_Z;
+      document.querySelector('#deltaAceleracion_gravedad_x').textContent = deltaVelocidad_X;
+      document.querySelector('#deltaAceleracion_gravedad_y').textContent = deltaVelocidad_Y;
+      document.querySelector('#deltaAceleracion_gravedad_z').textContent = deltaVelocidad_Z;
     
     }
 

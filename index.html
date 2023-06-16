@@ -17,7 +17,7 @@
   <h1>Tiempo: <span id="tiempo"></span></h1>
   <h1>Aceleracion_g X: <span id="deltaAceleracion_gravedad_x"></span></h1>
   <h1>Aceleracion_g Y: <span id="deltaAceleracion_gravedad_y"></span></h1>
-  <h1>Aceleracion_g Z: <span id="deltaAceleracion_gravedad_Z"></span></h1>
+  <h1>Aceleracion_g Z: <span id="deltaAceleracion_gravedad_z"></span></h1>
   <script>
 
     let tiempo = document.querySelector('#tiempo');
@@ -38,9 +38,9 @@
       document.querySelector('#aceleracion_y').textContent = deltaAceleracion_Y;
       document.querySelector('#aceleracion_z').textContent = deltaAceleracion_Z;
       document.querySelector('#tiempo').textContent = tiempo/1000;
-      document.querySelector('#deltaAceleracion_gravedad_x').textContent = deltaVelocidad_X;
-      document.querySelector('#deltaAceleracion_gravedad_y').textContent = deltaVelocidad_Y;
-      document.querySelector('#deltaAceleracion_gravedad_z').textContent = deltaVelocidad_Z;
+      document.querySelector('#deltaAceleracion_gravedad_x').textContent = deltaAceleracion_gravedad_X;
+      document.querySelector('#deltaAceleracion_gravedad_y').textContent = deltaAceleracion_gravedad_Y;
+      document.querySelector('#deltaAceleracion_gravedad_z').textContent = deltaAceleracion_gravedad_Z;
     
     }
 

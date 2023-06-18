@@ -12,36 +12,29 @@
 
 <body>
     <h1>Aceleracion X: <span id="aceleracion_x"></span></h1>
-    <h1>Aceleracion Y: <span id="aceleracion_y"></span></h1>
-    <h1>Aceleracion Z: <span id="aceleracion_z"></span></h1>
     <h1>Tiempo: <span id="tiempo"></span></h1>
-    <h1>Aceleracion_g X: <span id="deltaAceleracion_gravedad_x"></span></h1>
-    <h1>Aceleracion_g Y: <span id="deltaAceleracion_gravedad_y"></span></h1>
-    <h1>Aceleracion_g Z: <span id="deltaAceleracion_gravedad_z"></span></h1>
+    <h1>Velovidad: <span id="velocidad"></span></h1>
+    <h1>Metros: <span id="metros"></span></h1>
     <script>
 
 
-        let count = 0;
-
+        let segundos = 0;
+        let velocidad = 0;
+        let metros = 0;
         function handleDeviceMotion(event) {
             const aceleracion = event.acceleration;
-            const deltaAceleracion_X = aceleracion.x.toFixed(2);
-            const deltaAceleracion_Y = aceleracion.y.toFixed(2);
-            const deltaAceleracion_Z = aceleracion.z.toFixed(2);
-            const tiempo = event.interval/1000;
-            count += tiempo
             const aceleracion_gravedad = event.accelerationIncludingGravity;
-            const deltaAceleracion_gravedad_X = aceleracion_gravedad.x.toFixed(2);
-            const deltaAceleracion_gravedad_Y = aceleracion_gravedad.y.toFixed(2);
-            const deltaAceleracion_gravedad_Z = aceleracion_gravedad.z.toFixed(2);
-
+            const deltaAceleracion_X = aceleracion.x.toFixed(2);
+            const tiempo = event.interval/1000;
+            segundos += tiempo
+            if(deltaAceleracion_X > .5 || deltaAceleracion_X < -.5){
+                velocidad =  deltaAceleracion_X * segundos;
+                metros += (Math.abs(velocidad * segundos));
+            }
             document.querySelector('#aceleracion_x').textContent = deltaAceleracion_X;
-            document.querySelector('#aceleracion_y').textContent = deltaAceleracion_Y;
-            document.querySelector('#aceleracion_z').textContent = deltaAceleracion_Z;
-            document.querySelector('#tiempo').textContent = count.toFixed(2);
-            document.querySelector('#deltaAceleracion_gravedad_x').textContent = deltaAceleracion_gravedad_X;
-            document.querySelector('#deltaAceleracion_gravedad_y').textContent = deltaAceleracion_gravedad_Y;
-            document.querySelector('#deltaAceleracion_gravedad_z').textContent = deltaAceleracion_gravedad_Z;
+            document.querySelector('#tiempo').textContent = segundos;
+            document.querySelector('#velocidad').textContent = velocidad;
+            document.querySelector('#metros').textContent = metros.toFixed(2);
 
         }
 

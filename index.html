@@ -27,9 +27,9 @@
             const deltaAceleracion_X = aceleracion.x.toFixed(2);
             const tiempo = event.interval/1000;
             segundos += tiempo
-            if(deltaAceleracion_X > .1){
+            if(deltaAceleracion_X > .2){
                 velocidad =  deltaAceleracion_X * segundos;
-                metros = velocidad * segundos -(.5 * deltaAceleracion_X * tiempo * tiempo)
+                metros = (velocidad * segundos -(.5 * deltaAceleracion_X * tiempo * tiempo))/tiempo
             }
             document.querySelector('#aceleracion_x').textContent = deltaAceleracion_X;
             document.querySelector('#tiempo').textContent = segundos;

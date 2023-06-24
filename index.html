@@ -6,7 +6,7 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Proyecto8</title>
+    <title>Proyecto6</title>
 
 </head>
 
@@ -23,7 +23,7 @@
         let count = 0;
         let sum_aceleracion = 0;
         function handleDeviceMotion(event) {
-
+            let aceleracion_promedio = 0;
             const aceleracion = event.acceleration;
             const aceleracion_gravedad = event.accelerationIncludingGravity;
             const aceleracion_instantanea = aceleracion.x.toFixed(2);
@@ -32,7 +32,7 @@
             if(aceleracion_instantanea > .2){
                 count++;
                 sum_aceleracion += aceleracion;
-                let aceleracion_promedio = sum_aceleracion/count;
+                aceleracion_promedio = sum_aceleracion/count;
                 metros = .5 * aceleracion_promedio * segundos * segundos
 
             }
@@ -41,8 +41,6 @@
             document.querySelector('#metros').textContent = metros.toFixed(2);
 
         }
-
-
 
         if (window.DeviceMotionEvent) {
             window.addEventListener('devicemotion', handleDeviceMotion);

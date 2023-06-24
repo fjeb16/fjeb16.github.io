@@ -24,6 +24,7 @@
         let sum_aceleracion = 0;
         let aceleracion_promedio = 0;
         function handleDeviceMotion(event) {
+            
             const aceleracion = event.acceleration;
             const aceleracion_gravedad = event.accelerationIncludingGravity;
             const aceleracion_instantanea = aceleracion.x.toFixed(2);
@@ -31,7 +32,7 @@
             segundos += tiempo
             if(aceleracion_instantanea > .2){
                 count++;
-                sum_aceleracion += aceleracion;
+                sum_aceleracion += aceleracion_instantanea;
                 aceleracion_promedio = sum_aceleracion/count;
                 metros = .5 * aceleracion_promedio * segundos * segundos
 

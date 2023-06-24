@@ -6,14 +6,13 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Proyecto7</title>
+    <title>Proyecto6</title>
 
 </head>
 
 <body>
     <h4>Aceleracion_promedio: <span id="aceleracion_x"></span></h4>
     <h4>Tiempo: <span id="tiempo"></span></h4>
-    <h4>Velovidad_promedio: <span id="velocidad"></span></h4>
     <h4>Distancia_promedio: <span id="metros"></span></h4>
     <script>
 
@@ -25,22 +24,20 @@
         let sum_aceleracion = 0;
         function handleDeviceMotion(event) {
 
-
             const aceleracion = event.acceleration;
             const aceleracion_gravedad = event.accelerationIncludingGravity;
             const aceleracion_instantanea = aceleracion.x.toFixed(2);
             const tiempo = event.interval/1000;
             segundos += tiempo
-            if(aceleracion_instantanea > .2){
+            if(deltaAceleracion_X > .2){
                 count++;
                 sum_aceleracion += aceleracion;
-                deltaAceleracion_X = sum_aceleracion/count;
-                metros = .5 * deltaAceleracion_X * (segundos * segundos)
+                let aceleracion_promedio = sum_aceleracion/count;
+                metros = .5 * aceleracion_promedio * segundos * segundos
 
             }
-            document.querySelector('#aceleracion_x').textContent = deltaAceleracion_X.toFixed(2);
+            document.querySelector('#aceleracion_x').textContent = aceleracion_promedio.toFixed(2);
             document.querySelector('#tiempo').textContent = segundos.toFixed(2);
-            document.querySelector('#velocidad').textContent = velocidad.toFixed(2);
             document.querySelector('#metros').textContent = metros.toFixed(2);
 
         }

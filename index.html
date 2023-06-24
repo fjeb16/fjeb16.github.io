@@ -28,7 +28,7 @@
 
             const aceleracion = event.acceleration;
             const aceleracion_gravedad = event.accelerationIncludingGravity;
-            const aceleracion_instantanea = aceleracion_x.toFixed(2);
+            const aceleracion_instantanea = aceleracion.x.toFixed(2);
             const tiempo = event.interval/1000;
             segundos += tiempo
             if(deltaAceleracion_X > .2){

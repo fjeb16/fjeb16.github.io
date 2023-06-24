@@ -6,7 +6,7 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Proyecto6</title>
+    <title>Proyecto7</title>
 
 </head>
 
@@ -22,8 +22,8 @@
         let metros = 0;
         let count = 0;
         let sum_aceleracion = 0;
+        let aceleracion_promedio = 0;
         function handleDeviceMotion(event) {
-            let aceleracion_promedio = 0;
             const aceleracion = event.acceleration;
             const aceleracion_gravedad = event.accelerationIncludingGravity;
             const aceleracion_instantanea = aceleracion.x.toFixed(2);

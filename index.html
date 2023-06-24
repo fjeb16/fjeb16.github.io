@@ -6,7 +6,7 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Proyecto6</title>
+    <title>Proyecto7</title>
 
 </head>
 
@@ -31,7 +31,7 @@
             const aceleracion_instantanea = aceleracion.x.toFixed(2);
             const tiempo = event.interval/1000;
             segundos += tiempo
-            if(deltaAceleracion_X > .2){
+            if(aceleracion_instantanea > .2){
                 count++;
                 sum_aceleracion += aceleracion;
                 deltaAceleracion_X = sum_aceleracion/count;

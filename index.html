@@ -7,61 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 
-    <title>Proyecto9</title>
+    <title>Proyecto10</title>
 
 
 </head>
 
 <body>
-    <h4>Aceleracion_promedio: <span id="aceleracion_x"></span></h4>
-    <h4>Tiempo: <span id="tiempo"></span></h4>
-    <h4>Distancia_promedio: <span id="metros"></span></h4>
+    <h4>Distancia: <span id="metros">0.000</span></h4>
     <script>
-
-        // let count = 0;
-        // let aceleracion =[]
-        // let evento = {acceleration: {x:0.00}}
-        // setInterval(function(){
-        //     let numeroAleatorio = Math.random() * (.9 - .2) + .2;
-        //     evento.acceleration.x = numeroAleatorio;
-        //     count++; 
-        //     console.log(evento.acceleration.x);
-        // },1000)
-
-
-
-        // let segundos = 0;
-        // let velocidad = 0;
-        // let metros = 0;
-        // let count = 0;
-        // let sum_aceleracion = 0;
-        // let aceleracion_promedio = 0;
-        // function handleDeviceMotion(event) {
-            
-        //     const aceleracion = event.acceleration;
-        //     const aceleracion_gravedad = event.accelerationIncludingGravity;
-        //     const aceleracion_instantanea = aceleracion.x.toFixed(2);
-        //     const tiempo = event.interval/1000;
-        //     segundos += tiempo
-        //     if(aceleracion_instantanea > .2){
-        //         count++;
-        //         sum_aceleracion += aceleracion_instantanea;
-        //         aceleracion_promedio = sum_aceleracion/count;
-        //         metros = .5 * aceleracion_promedio * segundos * segundos
-
-        //     }
-        //     document.querySelector('#aceleracion_x').textContent = aceleracion_promedio.toFixed(2);
-        //     document.querySelector('#tiempo').textContent = segundos.toFixed(2);
-        //     document.querySelector('#metros').textContent = metros.toFixed(2);
-
-        // }
-
+        let count = 0;
+        let aceleracion =[]
+        let evento = {acceleration: {x: Math.random() * (.5 - .2) + .2}, interval:0.02}
+        let distancia = 0;
+        
+        function calculo_distancia(event){
+            const aceleracion = event.acceleration;
+            const aceleracion_gravedad = event.accelerationIncludingGravity;
+            const aceleracion_instantanea = aceleracion.x.toFixed(2);
+            const tiempo = 0.02;
+            if(aceleracion_instantanea > .2){
+                const distancia_actual = .5 * aceleracion_instantanea * tiempo * tiempo;
+                distancia += distancia_actual
+            }
+            document.querySelector('#metros').textContent = distancia.toFixed(2);
+        }
 
         if (window.DeviceMotionEvent) {
-            window.addEventListener('devicemotion', function(){
-                const tiempo = event.interval/1000;
-                document.querySelector('#tiempo').textContent = tiempo.toFixed(2);
-            });
+            window.addEventListener('devicemotion', calculo_distancia);
 
         } else {
             console.error('El dispositivo no soporta la API de detección de movimiento.');

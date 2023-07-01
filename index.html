@@ -16,7 +16,7 @@
     <script>
         function rotar_triangulo(evento) {
             try {
-                const aceleracion = evento.accelerationIncludingGravity;
+                const aceleracion = evento.acceleration;
                 const x = aceleracion.x.toFixed(2);
                 const y = aceleracion.y.toFixed(2);
                 const z = aceleracion.z.toFixed(2);

@@ -62,6 +62,9 @@
                 var direccion2DGrados = direccion2D * (180 / Math.PI);
                 var direccionVerticalGrados = direccionVertical * (180 / Math.PI);
 
+                movimiento_2d.textContent = direccion2DGrados;
+                movimiento_3d.textContent = direccionVerticalGrados;
+
 
                 document.getElementById("triangle").style.transform = `rotateX(${direccion2DGrados}deg) rotateZ(${direccionVerticalGrados}deg);`;
             } catch (error) {

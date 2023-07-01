@@ -15,6 +15,10 @@
 <body>
     <h4>Movimiento en 2D: <span id="movimiento_2d">0.000</span></h4>
     <h4>Movimiento en 3D: <span id="movimiento_3d">0.000</span></h4>
+    <h3>x:<span id="x"></span></h3>
+    <h3>y:<span id="y"></span></h3>
+    <h3>Z:<span id="z"></span></h3>
+
 
     <script>
         function calcular_direccion(evento) {
@@ -23,6 +27,11 @@
             const x = aceleracion.x.toFixed(2);
             const y = aceleracion.y.toFixed(2);
             const z = aceleracion.z.toFixed(2);
+
+            document.querySelector('#x') = x;
+            document.querySelector('#y') = y;
+            document.querySelector('#z') = z;
+
 
 
 

@@ -71,6 +71,13 @@
                 alert(error);
             }
         }
+
+        if (window.DeviceMotionEvent) {
+            window.addEventListener('devicemotion', rotar_triangulo);
+
+        } else {
+            console.error('El dispositivo no soporta la API de detección de movimiento.');
+        }
     </script>
 </body>
 

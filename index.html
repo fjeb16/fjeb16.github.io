@@ -30,9 +30,9 @@
                 const y = aceleracion.y.toFixed(2);
                 const z = aceleracion.z.toFixed(2);
 
-                document.querySelector('#x') = x;
-                document.querySelector('#y') = y;
-                document.querySelector('#z') = z;
+                document.querySelector('#x').textContent = x;
+                document.querySelector('#y').textContent = y;
+                document.querySelector('#z').textContent = z;
 
                 // Dirección del movimiento en 2D
                 var direccion2D = Math.atan2(y, x); // En radianes

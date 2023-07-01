@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 
-    <title>Proyecto11</title>
+    <title>Proyecto12</title>
 
 
 </head>
@@ -15,44 +15,46 @@
 <body>
     <h4>Movimiento en 2D: <span id="movimiento_2d">0.000</span></h4>
     <h4>Movimiento en 3D: <span id="movimiento_3d">0.000</span></h4>
-    <h3>x:<span id="x"></span></h3>
-    <h3>y:<span id="y"></span></h3>
-    <h3>Z:<span id="z"></span></h3>
+    <h5>x:<span id="x"></span></h5>
+    <h5>y:<span id="y"></span></h5>
+    <h5>Z:<span id="z"></span></h5>
 
 
     <script>
         function calcular_direccion(evento) {
-
-            const aceleracion = event.accelerationIncludingGravity;
-            const x = aceleracion.x.toFixed(2);
-            const y = aceleracion.y.toFixed(2);
-            const z = aceleracion.z.toFixed(2);
-
-            document.querySelector('#x') = x;
-            document.querySelector('#y') = y;
-            document.querySelector('#z') = z;
+            try {
 
 
+                const aceleracion = event.accelerationIncludingGravity;
+                const x = aceleracion.x.toFixed(2);
+                const y = aceleracion.y.toFixed(2);
+                const z = aceleracion.z.toFixed(2);
+
+                document.querySelector('#x') = x;
+                document.querySelector('#y') = y;
+                document.querySelector('#z') = z;
+
+                // Dirección del movimiento en 2D
+                var direccion2D = Math.atan2(y, x); // En radianes
+
+                // Dirección del movimiento en 3D
+                var magnitudHorizontal = Math.sqrt(x * x + y * y);
+                var direccionVertical = Math.atan2(z, magnitudHorizontal); // En radianes
+
+                // Convertir los ángulos a grados
+                var direccion2DGrados = direccion2D * (180 / Math.PI);
+                var direccionVerticalGrados = direccionVertical * (180 / Math.PI);
+
+                // Imprimir los resultados
+                movimiento_2d.textContent = direccion2DGrados;
+                movimiento_3d.textContent = direccionVerticalGrados;
 
 
-            // Dirección del movimiento en 2D
-            var direccion2D = Math.atan2(y, x); // En radianes
-
-            // Dirección del movimiento en 3D
-            var magnitudHorizontal = Math.sqrt(x * x + y * y);
-            var direccionVertical = Math.atan2(z, magnitudHorizontal); // En radianes
-
-            // Convertir los ángulos a grados
-            var direccion2DGrados = direccion2D * (180 / Math.PI);
-            var direccionVerticalGrados = direccionVertical * (180 / Math.PI);
-
-            // Imprimir los resultados
-            movimiento_2d.textContent = direccion2DGrados;
-            movimiento_3d.textContent = direccionVerticalGrados;
-
-
-            console.log("Dirección del movimiento en 2D: " + direccion2DGrados + " grados.");
-            console.log("Dirección del movimiento en 3D: " + direccionVerticalGrados + " grados.");
+                console.log("Dirección del movimiento en 2D: " + direccion2DGrados + " grados.");
+                console.log("Dirección del movimiento en 3D: " + direccionVerticalGrados + " grados.");
+            } catch (error) {
+                alert(error);
+            }
 
         }
 

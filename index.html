@@ -9,18 +9,20 @@
 
 <body>
     <table>
-        <thead><tr>
-            <th>La.Inicial</th>
-            <th>Lo.Inicial</th>
-            <th>La.Actual</th>
-            <th>Lo.Actual</th>
-        </tr></thead>
+        <thead>
+            <tr>
+                <th>La.Inicial</th>
+                <th>Lo.Inicial</th>
+                <th>La.Actual</th>
+                <th>Lo.Actual</th>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td id="la_inicial"></td>
                 <td id="lo_inicial"></td>
-                <td id="la.actual"></td>
-                <td id="lo.actual"></td>
+                <td id="la_actual"></td>
+                <td id="lo_actual"></td>
             </tr>
         </tbody>
     </table>
@@ -33,42 +35,40 @@
         } else {
             console.log("La geolocalización no es compatible con este navegador.");
         }
+        let count = 0;
 
-        // Función de devolución de llamada en caso de éxito
         function successCallback(position) {
-            // Obtener las coordenadas de la posición actual
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
 
-            // Guardar las coordenadas iniciales
-            var initialCoords = {
-                latitude: lat,
-                longitude: lon
+            const initialCoords = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
             };
 
-            // Escuchar los cambios de posición
             navigator.geolocation.watchPosition(
                 function (position) {
+                    count++;
                     // Obtener las nuevas coordenadas
                     var newLat = position.coords.latitude;
                     var newLon = position.coords.longitude;
-                    la_inicial.textContent = initialCoords.latitude;
-                    lo_inicial.textContent = initialCoords.longitude;
-                    lo_inicial.textContent = newLat;
-                    lo_inicial.textContent = newLon;
+
 
                     // Calcular la distancia entre las coordenadas iniciales y las nuevas coordenadas
                     var distance = calculateDistance(initialCoords.latitude, initialCoords.longitude, newLat, newLon);
 
                     // Mostrar la distancia en metros
                     distancia.textContent = `${distance} metros`;
+                    la_inicial.textContent = initialCoords.latitude;
+                    lo_inicial.textContent = initialCoords.longitude;
+                    la_actual.textContent = newLat;
+                    lo_actual.textContent = newLon;
+                    distancia.textContent = count;
                     console.log("Distancia recorrida: " + distance + " metros");
                 },
                 errorCallback
             );
+
         }
 
-        // Función de devolución de llamada en caso de error
         function errorCallback(error) {
             console.log("Error al obtener la posición: " + error.message);
         }
@@ -84,7 +84,7 @@
                 Math.sin(dLon / 2) * Math.sin(dLon / 2);
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             var distance = earthRadius * c * 1000; // Convertir a metros
-            // distancia.textContent = `${distance} metros`;
+            distancia.textContent = `${distance} metros`;
             return distance;
         }
 
@@ -93,7 +93,7 @@
             return degrees * (Math.PI / 180);
         }
 
-        //  calculateDistance(8.87958, -64.25767, 8.86739, -64.23198)
+        //  calculateDistance(8., -64.25767, 8.86739, -64.23198)
     </script>
 </body>
 

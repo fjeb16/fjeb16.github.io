@@ -39,19 +39,19 @@
         }
         let count = 0;
 
-        function successCallback(position) {
+        function successCallback(position1) {
 
             const initialCoords = {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude
+                latitude: position1.coords.latitude,
+                longitude: position1.coords.longitude
             };
 
             navigator.geolocation.watchPosition(
-                function (position) {
+                function (position2) {
                     count++;
                     // Obtener las nuevas coordenadas
-                    var newLat = position.coords.latitude;
-                    var newLon = position.coords.longitude;
+                    var newLat = position2.coords.latitude;
+                    var newLon = position2.coords.longitude;
 
 
                     // Calcular la distancia entre las coordenadas iniciales y las nuevas coordenadas

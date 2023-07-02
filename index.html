@@ -66,7 +66,12 @@
                     contador.textContent = count;
                     console.log("Distancia recorrida: " + distance + " metros");
                 },
-                errorCallback
+                errorCallback,
+                {
+                    enableHighAccuracy: false,
+                    timeout: 5000,
+                    maximumAge: 0,
+                }
             );
 
         }

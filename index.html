@@ -8,13 +8,68 @@
 </head>
 
 <body>
-
+    <h1>Distancia: <span id="distancia"></span></h1>
     <script>
+        // Verificar si el navegador admite la API de geolocalización
         if ("geolocation" in navigator) {
-            alert('Es compatible con GPS')
-
+            // Obtener la posición actual
+            navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
         } else {
-            alert('No compatible con GPS')
+            console.log("La geolocalización no es compatible con este navegador.");
+        }
+
+        // Función de devolución de llamada en caso de éxito
+        function successCallback(position) {
+            // Obtener las coordenadas de la posición actual
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+
+            // Guardar las coordenadas iniciales
+            var initialCoords = {
+                latitude: lat,
+                longitude: lon
+            };
+
+            // Escuchar los cambios de posición
+            navigator.geolocation.watchPosition(
+                function (position) {
+                    // Obtener las nuevas coordenadas
+                    var newLat = position.coords.latitude;
+                    var newLon = position.coords.longitude;
+
+                    // Calcular la distancia entre las coordenadas iniciales y las nuevas coordenadas
+                    var distance = calculateDistance(initialCoords.latitude, initialCoords.longitude, newLat, newLon);
+
+                    // Mostrar la distancia en metros
+                    distancia.textContent = `${distance} metros`;
+                    console.log("Distancia recorrida: " + distance + " metros");
+                },
+                errorCallback
+            );
+        }
+
+        // Función de devolución de llamada en caso de error
+        function errorCallback(error) {
+            console.log("Error al obtener la posición: " + error.message);
+        }
+
+        // Función para calcular la distancia entre dos puntos usando la fórmula del haversine
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            var earthRadius = 6371; // Radio de la Tierra en kilómetros
+            var dLat = toRadians(lat2 - lat1);
+            var dLon = toRadians(lon2 - lon1);
+            var a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var distance = earthRadius * c * 1000; // Convertir a metros
+            return distance;
+        }
+
+        // Función para convertir grados a radianes
+        function toRadians(degrees) {
+            return degrees * (Math.PI / 180);
         }
     </script>
 </body>

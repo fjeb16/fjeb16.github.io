@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>test 6</h1>
+    <h1>test 8</h1>
     <table>
         <thead>
             <tr>
@@ -29,9 +29,23 @@
     </table>
     <h1>Distancia: <span id="distancia"></span></h1>
     <h1>Contador: <span id="contador"></span></h1>
+    <h1>Test: <span id="distancia2"></span></h1>
 
     <script>
         // Verificar si el navegador admite la API de geolocalización
+        var inicio = false;
+        setInterval(() => {
+            navigator.geolocation.getCurrentPosition((position) => {
+                if (inicio) {
+                    var actual = { latitud: position.coords.latitude, longitud: position.coords.longitude }
+                    var distance = calculateDistance(inicio.latitud, inicio.longitud, actual.latitud, actual.longitud);
+                    distancia2.textContent = `${distance} metros`;
+                }else{
+                    inicio = { latitud: position.coords.latitude, longitud: position.coords.longitude }
+                }
+
+            }, errorCallback);
+        }, 1000)
         if ("geolocation" in navigator) {
             // Obtener la posición actual
             navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
@@ -42,10 +56,10 @@
 
         function successCallback(position1) {
 
-            const initialCoords = {
-                latitude: position1.coords.latitude,
-                longitude: position1.coords.longitude
-            };
+
+            var latitude = position1.coords.latitude;
+            var longitude = position1.coords.longitude;
+
 
             navigator.geolocation.watchPosition(
                 function (position2) {
@@ -56,12 +70,12 @@
 
 
                     // Calcular la distancia entre las coordenadas iniciales y las nuevas coordenadas
-                    var distance = calculateDistance(initialCoords.latitude, initialCoords.longitude, newLat, newLon);
+                    var distance = calculateDistance(latitude, longitude, newLat, newLon);
 
                     // Mostrar la distancia en metros
                     distancia.textContent = `${distance} metros`;
-                    la_inicial.textContent = initialCoords.latitude;
-                    lo_inicial.textContent = initialCoords.longitude;
+                    la_inicial.textContent = latitude;
+                    lo_inicial.textContent = longitude;
                     la_actual.textContent = newLat;
                     lo_actual.textContent = newLon;
                     contador.textContent = count;

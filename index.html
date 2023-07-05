@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>Medidor de pasos</h1>
+    <h1>Medidor de pasos 1</h1>
     <p id="pasos"></p>
     <script>
         try {
@@ -18,7 +18,7 @@
             if ('LinearAccelerationSensor' in window) {
                 // Crear una instancia del sensor de acelerómetro
                 const sensor = new LinearAccelerationSensor({ frequency: 1 });
-
+alert('control1.');
                 // Manejar la lectura del sensor
                 sensor.onreading = () => {
                     // Calcular la aceleración resultante

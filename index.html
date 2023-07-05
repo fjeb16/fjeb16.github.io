@@ -8,37 +8,35 @@
 </head>
 
 <body>
-    <h1>AbsoluteOrientationSensor 2</h1>
-    <h3>Alpha: <span id="a"></span></h3>
-    <h3>Beta: <span id="b"></span></h3>
-    <h3>Gamma: <span id="g"></span></h3>
+    <h1>Sensor de proximidad</h1>
+    <p></p>
     <script>
+        try {
 
-        Promise.all([
-            navigator.permissions.query({ name: "accelerometer" }),
-            navigator.permissions.query({ name: "magnetometer" }),
-            navigator.permissions.query({ name: "gyroscope" }),
-        ]).then((results) => {
-            if (results.every((result) => result.state === "granted")) {
-                const options = { frequency: 60, referenceFrame: "device" };
-                const sensor = new AbsoluteOrientationSensor(options);
 
-                sensor.addEventListener("reading", () => {
-                    // model is a Three.js object instantiated elsewhere.
-                    alert("let's go");
+            let sensor = new ProximitySensor();
 
-                });
-                sensor.addEventListener("error", (error) => {
-                    if (event.error.name === "NotReadableError") {
-                        alert("Sensor is not available.");
-                    }
-                });
-                sensor.start();
-                // …
-            } else {
-                alert("No permissions to use AbsoluteOrientationSensor.");
+            // Crear un elemento para mostrar el mensaje
+            let message = document.createElement("p");
+            document.body.appendChild(message);
+
+            // Definir una función para actualizar el mensaje según el valor del sensor
+            function updateMessage() {
+                if (sensor.near) {
+                    message.textContent = "Hay algo cerca del dispositivo";
+                } else {
+                    message.textContent = "No hay nada cerca del dispositivo";
+                }
             }
-        });
+
+            // Añadir un evento para actualizar el mensaje cuando cambie el valor del sensor
+            sensor.addEventListener("reading", updateMessage);
+
+            // Iniciar el sensor
+            sensor.start();
+        } catch (error) {
+            alert(error)
+        }
 
     </script>
 </body>

@@ -13,36 +13,33 @@
     <h3>Beta: <span id="b"></span></h3>
     <h3>Gamma: <span id="g"></span></h3>
     <script>
-        // Verificar si el sensor es compatible con el navegador
-        if ('AbsoluteOrientationSensor' in window) {
-            // Crear una instancia del sensor
-            const sensor = new AbsoluteOrientationSensor();
 
-            // Manejar el evento de lectura de los datos del sensor
-            sensor.addEventListener('reading', () => {
-                // Obtener los valores de orientación
-                const { alpha, beta, gamma } = sensor.quaternion;
+        Promise.all([
+            navigator.permissions.query({ name: "accelerometer" }),
+            navigator.permissions.query({ name: "magnetometer" }),
+            navigator.permissions.query({ name: "gyroscope" }),
+        ]).then((results) => {
+            if (results.every((result) => result.state === "granted")) {
+                const options = { frequency: 60, referenceFrame: "device" };
+                const sensor = new AbsoluteOrientationSensor(options);
 
-                // Mostrar los valores de orientación en la consola
-                a.textContent = alpha;
-                b.textContent = beta;
-                g.textContent = gamma;
-            });
-            Promise.all([
-                navigator.permissions.query({ name: "accelerometer" }),
-                navigator.permissions.query({ name: "magnetometer" }),
-                navigator.permissions.query({ name: "gyroscope" }),
-            ]).then((results) => {
-                if (results.every((result) => result.state === "granted")) {
-                    sensor.start();
-                    // …
-                } else {
-                    console.log("No permissions to use AbsoluteOrientationSensor.");
-                }
-            });
-        } else {
-            console.log('El sensor de orientación absoluta no es compatible con este navegador.');
-        }
+                sensor.addEventListener("reading", () => {
+                    // model is a Three.js object instantiated elsewhere.
+                    alert("let's go");
+
+                });
+                sensor.addEventListener("error", (error) => {
+                    if (event.error.name === "NotReadableError") {
+                        alert("Sensor is not available.");
+                    }
+                });
+                sensor.start();
+                // …
+            } else {
+                alert("No permissions to use AbsoluteOrientationSensor.");
+            }
+        });
+
     </script>
 </body>
 

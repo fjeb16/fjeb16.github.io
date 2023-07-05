@@ -8,8 +8,11 @@
 </head>
 
 <body>
-    <h1>Medidor de pasos</h1>
-    <p id="pasos"></p>
+    <h1>Medidor de pasos 2</h1>
+    <p id="x"></p>
+    <p id="y"></p>
+    <p id="z"></p>
+
     <script>
         try {
 
@@ -19,26 +22,13 @@
                 // Crear una instancia del sensor de acelerómetro
                 const sensor = new LinearAccelerationSensor({ frequency: 1 });
 
-                // Manejar la lectura del sensor
-                sensor.onreading = () => {
-                    // Calcular la aceleración resultante
-                    const acceleration = Math.sqrt(
-                        sensor.x * 2 + sensor.y * 2 + sensor.z ** 2
-                    );
-
-                    // Establecer un umbral de detección de paso (ajústalo según tus necesidades)
-                    const threshold = 10;
-
-                    // Verificar si se ha dado un paso
-                    if (acceleration > threshold) {
-                        // Incrementar el contador de pasos
-                        stepCount++;
-                        pasos.textContent = stepCount;
-                    }
-                };
-
-                // Comenzar a leer el sensor
+                sensor.addEventListener("reading", (e) => {
+                    x.textContent = sensor.x; 
+                    y.textContent = sensor.y;
+                    z.textContent = sensor.z;
+                });
                 sensor.start();
+
             } else {
                 alert('El sensor de acelerómetro no está disponible en este dispositivo.');
             }

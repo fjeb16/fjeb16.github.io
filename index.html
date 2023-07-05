@@ -18,23 +18,24 @@
         try {
 
 
-            // Verificar si el navegador admite el sensor de acelerómetro
-            if ('LinearAccelerationSensor' in window) {
-                // Crear una instancia del sensor de acelerómetro
-                const sensor = new LinearAccelerationSensor({ frequency: 1 });
-                sensor.addEventListener("reading", (e) => {
-                    x.textContent = sensor.x;
-                    y.textContent = sensor.y;
-                    z.textContent = sensor.z;
-                    const acceleration = Math.sqrt(
-                        sensor.x * 2 + sensor.y * 2 + sensor.z ** 2
-                    );
-                    calculo.textContent = acceleration;
-                });
-                sensor.start();
+            // Comprobamos si el navegador admite la API de Geolocation
+            if ("geolocation" in navigator) {
+                // La API está disponible
 
+                // Obtenemos la posición actual
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    // Obtenemos la velocidad en metros por segundo
+                    var speed = position.coords.speed;
+
+                    // Convertimos la velocidad a kilómetros por hora
+                    var speedKmph = speed * 3.6;
+
+                    // Mostramos la velocidad en la consola
+                     calculo.textContent =  speedKmph + " km/h";
+                });
             } else {
-                alert('El sensor de acelerómetro no está disponible en este dispositivo.');
+                // La API de Geolocation no está disponible
+                console.log("La geolocalización no está disponible en este navegador.");
             }
 
         } catch (error) {

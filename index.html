@@ -8,38 +8,60 @@
 </head>
 
 <body>
-    <h1>Medidor de pasos 2</h1>
+    <h1>Medidor de pasos 3</h1>
     <h2>Medicion: <span id="calculo"></span></h2>
     <p id="x"></p>
     <p id="y"></p>
     <p id="z"></p>
 
     <script>
-        try {
+        // Comprobamos si el navegador admite la API de DeviceMotionEvent
+        if ("ondevicemotion" in window) {
+            // La API está disponible
 
+            // Variables para almacenar la velocidad y el tiempo
+            var speed = 0;
+            var lastTime = 0;
 
-            // Comprobamos si el navegador admite la API de Geolocation
-            if ("geolocation" in navigator) {
-                // La API está disponible
+            // Manejador de eventos para obtener los datos de la aceleración lineal
+            function handleMotionEvent(event) {
+                // Obtenemos el tiempo actual
+                var currentTime = Date.now();
 
-                // Obtenemos la posición actual
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    // Obtenemos la velocidad en metros por segundo
-                    var speed = position.coords.speed;
+                // Calculamos el intervalo de tiempo desde la última lectura
+                var deltaTime = (currentTime - lastTime) / 1000; // Convertimos a segundos
 
-                    // Convertimos la velocidad a kilómetros por hora
-                    var speedKmph = speed * 3.6;
+                // Actualizamos el tiempo actual para la próxima lectura
+                lastTime = currentTime;
+
+                // Obtenemos los datos de la aceleración lineal
+                var acceleration = event.accelerationIncludingGravity;
+
+                // Calculamos la aceleración total sin la gravedad
+                var accelerationWithoutGravity = {
+                    x: acceleration.x - event.accelerationIncludingGravity.x,
+                    y: acceleration.y - event.accelerationIncludingGravity.y,
+                    z: acceleration.z - event.accelerationIncludingGravity.z
+                };
+
+                // Verificamos si la aceleración en el eje X (hacia adelante) es positiva
+                if (accelerationWithoutGravity.x > 0) {
+                    // Calculamos la velocidad estimada en el eje X
+                    var estimatedSpeedX = accelerationWithoutGravity.x * deltaTime;
+
+                    // Actualizamos la velocidad acumulada
+                    speed += estimatedSpeedX;
 
                     // Mostramos la velocidad en la consola
-                     calculo.textContent =  speedKmph + " km/h";
-                });
-            } else {
-                // La API de Geolocation no está disponible
-                console.log("La geolocalización no está disponible en este navegador.");
+                    calculo.textContent = speed + " m/s";
+                }
             }
 
-        } catch (error) {
-            alert(error)
+            // Asociamos el evento de DeviceMotion al manejador de eventos
+            window.addEventListener("devicemotion", handleMotionEvent);
+        } else {
+            // La API de DeviceMotionEvent no está disponible
+            alert("El acceso a la aceleración lineal no está disponible en este navegador o dispositivo.");
         }
     </script>
 </body>

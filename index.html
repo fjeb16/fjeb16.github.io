@@ -8,37 +8,44 @@
 </head>
 
 <body>
-    <h1>Sensor de proximidad</h1>
-    <p></p>
+    <h1>Medidor de pasos</h1>
+    <p id="pasos"></p>
     <script>
         try {
 
 
-            let sensor = new ProximitySensor();
+            // Verificar si el navegador admite el sensor de acelerómetro
+            if ('LinearAccelerationSensor' in window) {
+                // Crear una instancia del sensor de acelerómetro
+                const sensor = new LinearAccelerationSensor({ frequency: 1 });
 
-            // Crear un elemento para mostrar el mensaje
-            let message = document.createElement("p");
-            document.body.appendChild(message);
+                // Manejar la lectura del sensor
+                sensor.onreading = () => {
+                    // Calcular la aceleración resultante
+                    const acceleration = Math.sqrt(
+                        sensor.x * 2 + sensor.y * 2 + sensor.z ** 2
+                    );
 
-            // Definir una función para actualizar el mensaje según el valor del sensor
-            function updateMessage() {
-                if (sensor.near) {
-                    message.textContent = "Hay algo cerca del dispositivo";
-                } else {
-                    message.textContent = "No hay nada cerca del dispositivo";
-                }
+                    // Establecer un umbral de detección de paso (ajústalo según tus necesidades)
+                    const threshold = 10;
+
+                    // Verificar si se ha dado un paso
+                    if (acceleration > threshold) {
+                        // Incrementar el contador de pasos
+                        stepCount++;
+                        pasos.textContent = stepCount;
+                    }
+                };
+
+                // Comenzar a leer el sensor
+                sensor.start();
+            } else {
+                alert('El sensor de acelerómetro no está disponible en este dispositivo.');
             }
 
-            // Añadir un evento para actualizar el mensaje cuando cambie el valor del sensor
-            sensor.addEventListener("reading", updateMessage);
-
-            // Iniciar el sensor
-            sensor.start();
         } catch (error) {
             alert(error)
         }
-
-
     </script>
 </body>
 

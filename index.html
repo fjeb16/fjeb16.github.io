@@ -21,7 +21,6 @@
             if ('LinearAccelerationSensor' in window) {
                 // Crear una instancia del sensor de acelerómetro
                 const sensor = new LinearAccelerationSensor({ frequency: 1 });
-
                 sensor.addEventListener("reading", (e) => {
                     x.textContent = sensor.x; 
                     y.textContent = sensor.y;

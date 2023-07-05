@@ -17,12 +17,12 @@
         if ('AbsoluteOrientationSensor' in window) {
             // Crear una instancia del sensor
             const sensor = new AbsoluteOrientationSensor();
-
+            alert('control1')
             // Manejar el evento de lectura de los datos del sensor
             sensor.addEventListener('reading', () => {
                 // Obtener los valores de orientación
                 const { alpha, beta, gamma } = sensor.quaternion;
-
+alert('control2')
                 // Mostrar los valores de orientación en la consola
                 a.textContent = alpha;
                 b.textContent = beta;
@@ -34,6 +34,7 @@
                 navigator.permissions.query({ name: "gyroscope" }),
             ]).then((results) => {
                 if (results.every((result) => result.state === "granted")) {
+                    alert('control3')
                     sensor.start();
                     // …
                 } else {

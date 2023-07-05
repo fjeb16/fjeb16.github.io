@@ -8,59 +8,109 @@
 </head>
 
 <body>
-    <h1>Aceleracion Sin Gravedad</h1>
-    <p id="x"></p>
-    <p id="y"></p>
-    <p id="z"></p>
-    <h1>Aceleracion Con Gravedad</h1>
-    <p id="xg"></p>
-    <p id="yg"></p>
-    <p id="zg"></p>
-    <h1>Giroscopio</h1>
-    <p id="giroscopio_x"></p>
-    <p id="giroscopio_y"></p>
-    <p id="giroscopio_z"></p>
+    <h1>test 8</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>La.Inicial</th>
+                <th>Lo.Inicial</th>
+                <th>La.Actual</th>
+                <th>Lo.Actual</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="la_inicial"></td>
+                <td id="lo_inicial"></td>
+                <td id="la_actual"></td>
+                <td id="lo_actual"></td>
+            </tr>
+        </tbody>
+    </table>
+    <h1>Distancia: <span id="distancia"></span></h1>
+    <h1>Contador: <span id="contador"></span></h1>
+    <h1>Test: <span id="distancia2"></span></h1>
 
     <script>
-        try {
+        // Verificar si el navegador admite la API de geolocalización
+        var inicio = false;
+        setInterval(() => {
+            navigator.geolocation.getCurrentPosition((position) => {
+                if (inicio) {
+                    var actual = { latitud: position.coords.latitude, longitud: position.coords.longitude }
+                    var distance = calculateDistance(inicio.latitud, inicio.longitud, actual.latitud, actual.longitud);
+                    distancia2.textContent = `${distance} metros`;
+                }else{
+                    inicio = { latitud: position.coords.latitude, longitud: position.coords.longitude }
+                }
 
-
-            // Verificar si el navegador admite el sensor de acelerómetro
-            if ('LinearAccelerationSensor' in window && 'GravitySensor' in window && 'Gyroscope' in window) {
-                // Crear una instancia del sensor de acelerómetro
-                const sensor = new LinearAccelerationSensor({ frequency: 60 });
-                const gravitySensor = new GravitySensor({ frequency: 60 });
-                const gyroscope = new Gyroscope({ frequency: 60 });
-                sensor.addEventListener("reading", (e) => {
-                    x.textContent = sensor.x;
-                    y.textContent = sensor.y;
-                    z.textContent = sensor.z;
-                    
-                });
-                gravitySensor.addEventListener("reading", (e) => {
-                    xg.textContent = gravitySensor.x;
-                    yg.textContent = gravitySensor.y;
-                    zg.textContent = gravitySensor.z;
-                    
-                });
-                gyroscope.addEventListener("reading", (e) => {
-                    giroscopio_x.textContent = gyroscope.x;
-                    giroscopio_y.textContent = gyroscope.y;
-                    giroscopio_z.textContent = gyroscope.z;
-                });
-                sensor.start();
-                gravitySensor.start();
-                gyroscope.start();
-
-
-
-            } else {
-                alert('El sensor de acelerómetro no está disponible en este dispositivo.');
-            }
-
-        } catch (error) {
-            alert(error)
+            }, errorCallback);
+        }, 1000)
+        if ("geolocation" in navigator) {
+            // Obtener la posición actual
+            navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+        } else {
+            console.log("La geolocalización no es compatible con este navegador.");
         }
+        let count = 0;
+
+        function successCallback(position1) {
+
+
+            var latitude = position1.coords.latitude;
+            var longitude = position1.coords.longitude;
+
+
+            navigator.geolocation.watchPosition(
+                function (position2) {
+                    count++;
+                    // Obtener las nuevas coordenadas
+                    var newLat = position2.coords.latitude;
+                    var newLon = position2.coords.longitude;
+
+
+                    // Calcular la distancia entre las coordenadas iniciales y las nuevas coordenadas
+                    var distance = calculateDistance(latitude, longitude, newLat, newLon);
+
+                    // Mostrar la distancia en metros
+                    distancia.textContent = `${distance} metros`;
+                    la_inicial.textContent = latitude;
+                    lo_inicial.textContent = longitude;
+                    la_actual.textContent = newLat;
+                    lo_actual.textContent = newLon;
+                    contador.textContent = count;
+                    console.log("Distancia recorrida: " + distance + " metros");
+                },
+                errorCallback
+            );
+
+        }
+
+        function errorCallback(error) {
+            console.log("Error al obtener la posición: " + error.message);
+        }
+
+        // Función para calcular la distancia entre dos puntos usando la fórmula del haversine
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            var earthRadius = 6371; // Radio de la Tierra en kilómetros
+            var dLat = toRadians(lat2 - lat1);
+            var dLon = toRadians(lon2 - lon1);
+            var a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var distance = earthRadius * c * 1000; // Convertir a metros
+            distancia.textContent = `${distance} metros`;
+            return distance;
+        }
+
+        // Función para convertir grados a radianes
+        function toRadians(degrees) {
+            return degrees * (Math.PI / 180);
+        }
+
+        //  calculateDistance(8., -64.25767, 8.86739, -64.23198)
     </script>
 </body>
 

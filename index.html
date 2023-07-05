@@ -9,6 +9,7 @@
 
 <body>
     <h1>Medidor de pasos 2</h1>
+    <h2>Medicion: <span id="calculo"></span></h2>
     <p id="x"></p>
     <p id="y"></p>
     <p id="z"></p>
@@ -22,9 +23,13 @@
                 // Crear una instancia del sensor de acelerómetro
                 const sensor = new LinearAccelerationSensor({ frequency: 1 });
                 sensor.addEventListener("reading", (e) => {
-                    x.textContent = sensor.x; 
+                    x.textContent = sensor.x;
                     y.textContent = sensor.y;
                     z.textContent = sensor.z;
+                    const acceleration = Math.sqrt(
+                        sensor.x * 2 + sensor.y * 2 + sensor.z ** 2
+                    );
+                    calculo.textContent = acceleration;
                 });
                 sensor.start();
 

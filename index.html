@@ -8,65 +8,55 @@
 </head>
 
 <body>
-    <h1>test: <span id="calculo"></span></h1>
+    <h1>Aceleracion Sin Gravedad</h1>
+    <p id="x"></p>
+    <p id="y"></p>
+    <p id="z"></p>
+    <h1>Aceleracion Con Gravedad</h1>
+    <p id="xg"></p>
+    <p id="yg"></p>
+    <p id="zg"></p>
+    <h1>Giroscopio</h1>
+    <p id="giroscopio_x"></p>
+    <p id="giroscopio_y"></p>
+    <p id="giroscopio_z"></p>
 
     <script>
         try {
 
-            let distanciaTotal = 0;
-            let velocidadInicial = { x: 0, y: 0, z: 0 };
-            let tiempoInicial = null;
 
-            window.addEventListener('devicemotion', function (event) {
-                // Obtener los datos de aceleración
-                const accelerationX = event.accelerationIncludingGravity.x;
-                const accelerationY = event.accelerationIncludingGravity.y;
-                const accelerationZ = event.accelerationIncludingGravity.z;
+            // Verificar si el navegador admite el sensor de acelerómetro
+            if ('LinearAccelerationSensor' in window && 'GravitySensor' in window && 'Gyroscope' in window) {
+                // Crear una instancia del sensor de acelerómetro
+                const sensor = new LinearAccelerationSensor({ frequency: 60 });
+                const gravitySensor = new GravitySensor({ frequency: 60 });
+                const gyroscope = new Gyroscope({ frequency: 60 });
+                sensor.addEventListener("reading", (e) => {
+                    x.textContent = sensor.x;
+                    y.textContent = sensor.y;
+                    z.textContent = sensor.z;
+                    
+                });
+                gravitySensor.addEventListener("reading", (e) => {
+                    xg.textContent = gravitySensor.x;
+                    yg.textContent = gravitySensor.y;
+                    zg.textContent = gravitySensor.z;
+                    
+                });
+                gyroscope.addEventListener("reading", (e) => {
+                    giroscopio_x.textContent = gyroscope.x;
+                    giroscopio_y.textContent = gyroscope.y;
+                    giroscopio_z.textContent = gyroscope.z;
+                });
+                sensor.start();
+                gravitySensor.start();
+                gyroscope.start();
 
-                // Obtener el tiempo actual
-                const tiempoActual = new Date().getTime();
 
-                // Si es la primera vez que se obtienen los datos, establecer el tiempo inicial
-                if (tiempoInicial === null) {
-                    tiempoInicial = tiempoActual;
-                    return; // Salir de la función ya que no hay suficientes datos para calcular la distancia
-                }
 
-                // Calcular el tiempo transcurrido desde el inicio
-                const tiempoTranscurrido = (tiempoActual - tiempoInicial) / 1000; // Convertir a segundos
-
-                // Calcular la velocidad promedio en el intervalo utilizando la aceleración
-                const velocidadPromedio = {
-                    x: (velocidadInicial.x + accelerationX) / 2 * tiempoTranscurrido,
-                    y: (velocidadInicial.y + accelerationY) / 2 * tiempoTranscurrido,
-                    z: (velocidadInicial.z + accelerationZ) / 2 * tiempoTranscurrido
-                };
-
-                // Calcular la distancia recorrida en el intervalo utilizando la velocidad promedio
-                const distanciaIntervalo = {
-                    x: velocidadPromedio.x * tiempoTranscurrido,
-                    y: velocidadPromedio.y * tiempoTranscurrido,
-                    z: velocidadPromedio.z * tiempoTranscurrido
-                };
-
-                // Sumar la distancia del intervalo a la distancia total
-                distanciaTotal += Math.sqrt(
-                    distanciaIntervalo.x ** 2 +
-                    distanciaIntervalo.y ** 2 +
-                    distanciaIntervalo.z ** 2
-                );
-
-                // Actualizar la velocidad inicial y el tiempo inicial para el siguiente cálculo
-                velocidadInicial = {
-                    x: accelerationX,
-                    y: accelerationY,
-                    z: accelerationZ
-                };
-                tiempoInicial = tiempoActual;
-
-                // Imprimir la distancia total recorrida en cada actualización
-                calculo.textContent =  distanciaTotal;
-            });
+            } else {
+                alert('El sensor de acelerómetro no está disponible en este dispositivo.');
+            }
 
         } catch (error) {
             alert(error)

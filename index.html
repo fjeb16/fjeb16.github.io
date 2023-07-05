@@ -8,59 +8,46 @@
 </head>
 
 <body>
-    <h1>rotationRate</h1>
-    <h2>Medicion: <span id="calculo"></span></h2>
+    <h1>Sin Gravedad</h1>
     <p id="x"></p>
     <p id="y"></p>
     <p id="z"></p>
+    <h1>Con Gravedad</h1>
+    <p id="xg"></p>
+    <p id="yg"></p>
+    <p id="zg"></p>
 
     <script>
-        // Comprobamos si el navegador admite la API de DeviceOrientationEvent
-        if ("ondeviceorientation" in window) {
-            // La API está disponible
+        try {
 
-            // Variables para almacenar la velocidad y el tiempo
-            var speed = 0;
-            var lastTime = 0;
 
-            // Manejador de eventos para obtener los datos del giroscopio
-            function handleOrientationEvent(event) {
-                // Obtenemos el tiempo actual
-                var currentTime = Date.now();
+            // Verificar si el navegador admite el sensor de acelerómetro
+            if ('LinearAccelerationSensor' in window) {
+                // Crear una instancia del sensor de acelerómetro
+                const sensor = new LinearAccelerationSensor({ frequency: 60 });
+                const gravitySensor = new GravitySensor({ frequency: 60 });
+                sensor.addEventListener("reading", (e) => {
+                    x.textContent = sensor.x;
+                    y.textContent = sensor.y;
+                    z.textContent = sensor.z;
+                    
+                });
+                gravitySensor.addEventListener("reading", (e) => {
+                    xg.textContent = gravitySensor.x;
+                    yg.textContent = gravitySensor.y;
+                    zg.textContent = gravitySensor.z;
+                    
+                });
+                sensor.start();
+                gravitySensor.start();
 
-                // Calculamos el intervalo de tiempo desde la última lectura
-                var deltaTime = (currentTime - lastTime) / 1000; // Convertimos a segundos
 
-                // Actualizamos el tiempo actual para la próxima lectura
-                lastTime = currentTime;
-
-                // Obtenemos los datos de velocidad angular
-                var rotationRate = event.rotationRate;
-
-                // Calculamos la velocidad estimada en cada eje
-                var estimatedSpeedX = rotationRate.beta;   // Velocidad en el eje X (cabeceo)
-                var estimatedSpeedY = rotationRate.gamma;  // Velocidad en el eje Y (balanceo)
-                var estimatedSpeedZ = rotationRate.alpha;  // Velocidad en el eje Z (guiñada)
-
-                // Calculamos la velocidad lineal estimada
-                var estimatedSpeed = Math.sqrt(
-                    Math.pow(estimatedSpeedX, 2) +
-                    Math.pow(estimatedSpeedY, 2) +
-                    Math.pow(estimatedSpeedZ, 2)
-                );
-
-                // Actualizamos la velocidad acumulada
-                speed += estimatedSpeed * deltaTime;
-
-                // Mostramos la velocidad en la consola
-                calculo.textContent = "Velocidad: " + speed + " m/s";
+            } else {
+                alert('El sensor de acelerómetro no está disponible en este dispositivo.');
             }
 
-            // Asociamos el evento de DeviceOrientation al manejador de eventos
-            window.addEventListener("deviceorientation", handleOrientationEvent);
-        } else {
-            // La API de DeviceOrientationEvent no está disponible
-            console.log("El acceso al giroscopio no está disponible en este navegador o dispositivo.");
+        } catch (error) {
+            alert(error)
         }
     </script>
 </body>
